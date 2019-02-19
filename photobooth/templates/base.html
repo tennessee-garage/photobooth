@@ -1,18 +1,23 @@
 <!doctype html>
-<title>{% block title %}{% endblock %} - Photobooth</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<nav>
-  <h1>Photobooth</h1>
-  <ul>
-      <li><a href="{{ url_for('kiosk.photo') }}">Take Photo</a>
-  </ul>
-</nav>
-<section class="content">
-  <header>
-    {% block header %}{% endblock %}
-  </header>
-  {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-  {% block content %}{% endblock %}
-</section>
+<html>
+  <head>
+    <title>{% block title %}{% endblock %} - Photobooth</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/jquery-3.3.1.js"></script>
+    <script src="/static/axios-0.18.0.min.js"></script>
+  </head>
+  <body>
+    <div id="viewscreen">
+      <section class="content">
+        <header>
+          {% block header %}{% endblock %}
+        </header>
+        {% for message in get_flashed_messages() %}
+          <div class="flash">{{ message }}</div>
+        {% endfor %}
+        {% block content %}{% endblock %}
+      </section>
+    </div>
+    <script src="/static/photo.js"></script>
+  </body>
+</html>

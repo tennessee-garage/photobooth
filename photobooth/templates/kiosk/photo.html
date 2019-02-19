@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="title">{% block title %}Taking Photo{% endblock %}</div>
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <button class="main-button full-pane" id="take-photo">
+        We will take three photos.  Tap to start.
+    </button>
+
+    <div class="hidden full-pane" id="countdown">
+        <span id="counter">3</span>
+    </div>
+
+    <div class="hidden full-pane" id="preview-pane">
+        <img id="preview" height="400" src="">
+    </div>
+</div>
+{% endblock %}

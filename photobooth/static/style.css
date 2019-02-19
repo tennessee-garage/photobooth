@@ -1,0 +1,49 @@
+#viewscreen {
+    height: 464px;
+    width: 100%;
+    background-color: #AAAAAA
+}
+
+.title {
+    font-size: 32px;
+    text-align: center;
+}
+
+.content {
+    width: 100%;
+    text-align: center
+}
+
+.full-pane {
+    margin: auto;
+    height: 400px;
+    width: 80%;
+}
+
+.main-button {
+    font-size: 72px;
+}
+
+#countdown {
+    font-size: 350px;
+    vertical-align: middle;
+}
+
+#counter {
+    vertical-align: middle;
+    display: inline-block;
+    line-height: 400px;
+}
+
+#preview-pane {
+    vertical-align: middle;
+}
+
+#preview {
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.hidden {
+    display: none;
+}

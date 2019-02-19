@@ -10,7 +10,7 @@ from photobooth.db import get_db
 bp = Blueprint('kiosk', __name__, url_prefix='/kiosk')
 
 
-@bp.route('/ready', methods=('GET', 'POST'))
+@bp.route('/', methods=('GET', 'POST'))
 def ready():
     return render_template('kiosk/ready.html')
 

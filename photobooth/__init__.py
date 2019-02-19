@@ -35,4 +35,7 @@ def create_app(test_config=None):
     from . import kiosk
     app.register_blueprint(kiosk.bp)
 
+    from . import camera
+    app.register_blueprint(camera.bp)
+
     return app

@@ -1,15 +1,13 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Ready{% endblock %}</h1>
+<div class="title">{% block title %}Photobooth{% endblock %}</div>
 {% endblock %}
 
 {% block content %}
-  <form method="post">
-    <label for="username">Username</label>
-    <input name="username" id="username" required>
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required>
-    <input type="submit" value="Register">
-  </form>
+<div class="content">
+  <a href="{{ url_for('kiosk.photo') }}">
+    <button class="main-button full-pane">Tap to Begin</button>
+  </a>
+</div>
 {% endblock %}
