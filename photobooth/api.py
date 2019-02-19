@@ -14,14 +14,8 @@ def get_camera():
     global camera
     if not camera:
         camera = PiCamera()
+        get_camera().resolution = (1024, 768)
     return camera
-
-
-@bp.route('/warmup', methods=('GET', 'POST'))
-def warmup():
-    get_camera().resolution = (1024, 768)
-#    camera.start_preview()
-    return jsonify({})
 
 
 @bp.route('/snap', methods=('GET', 'POST'))
@@ -36,6 +30,6 @@ def snap():
 
 
 def generate_image_path():
-    photos_dir = '/home/pi/photobooth/photobooth/static/photos'  # os.path.join(current_app.instance_path, 'static/photos')
-    img_file = tempfile.NamedTemporaryFile(delete=False, suffix='.jpg', dir=photos_dir)
-    return img_file.name
+    photos_dir = os.path.join(current_app.root_path, 'static/photos')
+    (fd, filename) = tempfile.mkstemp(suffix='.jpg', dir=photos_dir)
+    return filename
