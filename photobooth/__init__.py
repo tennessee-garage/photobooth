@@ -2,6 +2,8 @@ import os
 
 from flask import Flask
 
+PHOTO_RELATIVE_DIR = 'static/photos'
+
 
 def create_app(test_config=None):
     # create and configure the app
@@ -10,6 +12,8 @@ def create_app(test_config=None):
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'photobooth.sqlite'),
     )
+
+    app.photo_dir = os.path.join(app.root_path, 'static/photos')
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -24,18 +28,13 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
-
     from . import db
     db.init_app(app)
 
     from . import kiosk
     app.register_blueprint(kiosk.bp)
 
-    from . import camera
-    app.register_blueprint(camera.bp)
+    from . import api
+    app.register_blueprint(api.bp)
 
     return app

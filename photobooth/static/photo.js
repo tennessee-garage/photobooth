@@ -1,4 +1,5 @@
 var countdown;
+var set_id;
 
 function countDownTick() {
     $('#counter').text(countdown);
@@ -13,7 +14,6 @@ function countDownTick() {
 }
 
 function startCountdown() {
-    init_camera();
     $('#take-photo').addClass("hidden");
     $('#countdown').removeClass("hidden");
     countdown = 3;
@@ -24,37 +24,45 @@ function handleCountdown() {
     if (countdown >= 1) {
         countDownTick()
     } else {
+        $('#counter').text('smile!');
         take_photo()
     }
-}
-
-function init_camera() {
-    var data = {
-    };
-    console.log('Initializing camera: ', data);
-    return axios.post('/camera/warmup', data).then(function (response) {
-        handleWarmUp(response.data);
-    }).catch(function (error) {
-        handleError(error);
-    });
 }
 
 function handleWarmUp(response) {
     console.log("Warmup response: ", response)
 }
 
-function take_photo() {
-    var data = {
-    };
-    console.log('Taking a photo: ', data);
-    return axios.post('/camera/snap', data).then(function (response) {
-        handleSnapResponse(response.data);
+function createPhotosetAndRedirect(layout_id) {
+    var data = "layout_id=1";
+    console.log('Creating a photoset: ', data);
+    return axios.post('/api/photo_set', data).then(function (response) {
+        handleCreatePhotosetAndRedirectResponse(response.data);
     }).catch(function (error) {
         handleError(error);
     });
 }
 
-function handleSnapResponse(photo) {
+function handleCreatePhotosetAndRedirectResponse(photoset) {
+    console.log("Photoset response: ", photoset);
+    urlParams = new URLSearchParams(location.search);
+    urlParams.set('set_id', photoset['id']);
+
+    href = location.pathname + '?' + urlParams.toString();
+    window.location.replace(href);
+}
+
+function take_photo() {
+    var data = "set_id=" + set_id
+    console.log('Taking a photo: ', data);
+    return axios.post('/api/photo', data).then(function (response) {
+        handlePhotoResponse(response.data);
+    }).catch(function (error) {
+        handleError(error);
+    });
+}
+
+function handlePhotoResponse(photo) {
     console.log("Photo response: ", photo)
     $('#countdown').addClass("hidden");
     $('#preview-pane').removeClass("hidden")
@@ -73,4 +81,12 @@ function handleError(error) {
     console.error(error);
 }
 
-installListeners();
+$( document ).ready(function() {
+    urlParams = new URLSearchParams(location.search);
+    set_id = urlParams.get('set_id');
+    if (!(set_id > 0)) {
+        createPhotosetAndRedirect();
+    }
+
+    installListeners();
+});
